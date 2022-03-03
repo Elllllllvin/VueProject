@@ -1,0 +1,89 @@
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 10px;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: larger;
+}
+.newinputdiv {
+  display: inline-block;
+}
+
+.singlefilter {
+  display: inline-block;
+}
+
+.addbutton {
+  width: 80px;
+  height: 30px;
+  background-color: blanchedalmond;
+  color: black;
+  cursor: pointer;
+}
+.sortbutton {
+  width: 30px;
+  height: 30px;
+
+  cursor: pointer;
+}
+.removebutton {
+  width: 75px;
+  height: 25px;
+  background-color: powderblue;
+  color: black;
+  cursor: pointer;
+  font-size: 15px;
+
+  transition: color 0.2s ease-out;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+.container .row {
+  width: fit-content;
+  height: fit-content;
+}
+
+.table-css {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid #cbcbcb;
+}
+
+.table-css td,
+.table-css th {
+  border-left: 1px solid #cbcbcb;
+  border-width: 0 0 0 1px;
+  font-size: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0.5em 1em;
+}
+
+.table-css thead {
+  background-color: #e0e0e0;
+  color: #000;
+  text-align: left;
+  vertical-align: bottom;
+}
+
+.table-css td {
+  background-color: transparent;
+}
+
+.selector {
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+}

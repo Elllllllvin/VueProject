@@ -1,0 +1,332 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>表格</title>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+
+  <body>
+    <p>This is a Self-Defined Table</p>
+    <div class="container" id="app">
+      <!-- 过滤模块 -->
+      <div class="filter-module">
+        <div class="singlefilter">
+          Name:
+          <select v-model="filterName" placeholder="请选择过滤">
+            <option value="ALL">ALL</option>
+            <option v-for="item in TableData">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="singlefilter">
+          Sex:
+          <select v-model="filterSex" placeholder="请选择过滤">
+            <option value="ALL">ALL</option>
+            <option v-for="item in Sexset">
+              <!--               v-if="Sexset.indexOf(item.sex) == -1"
+              v-on:change="AddSexset(item.sex)" -->
+              {{item}}
+            </option>
+          </select>
+        </div>
+        <div class="singlefilter">
+          Birthday:
+          <select v-model="filterBirthday" placeholder="请选择过滤">
+            <option value="ALL">ALL</option>
+            <option v-for="item in TableData">{{item.birthday}}</option>
+          </select>
+        </div>
+        <div class="singlefilter">
+          Address:
+          <select v-model="filterAddress" placeholder="请选择过滤">
+            <option value="ALL">ALL</option>
+            <option v-for="item in TableData">{{item.addr}}</option>
+          </select>
+        </div>
+        <div class="singlefilter">
+          Student-ID:
+          <select v-model="filterStudentID" placeholder="请选择过滤">
+            <option value="ALL">ALL</option>
+            <option v-for="item in TableData">{{item.stuid}}</option>
+          </select>
+        </div>
+      </div>
+      <!-- 表格模块 -->
+
+      <div class="table-module">
+        <table class="table-css">
+          <thead>
+            <tr>
+              <th v-for="item in HeadData">
+                {{item.name}}
+                <!-- name排序 -->
+                <button
+                  class="sortbutton"
+                  v-on:click="sortByNameAsc"
+                  v-if="item.name=='Name'"
+                >
+                  👆
+                </button>
+                <button
+                  class="sortbutton"
+                  v-on:click="sortByNameDsc"
+                  v-if="item.name=='Name'"
+                >
+                  👇
+                </button>
+                <!-- sex排序 -->
+                <button
+                  class="sortbutton"
+                  v-on:click="sortBySexAsc"
+                  v-if="item.name=='Sex'"
+                >
+                  👆
+                </button>
+                <button
+                  class="sortbutton"
+                  v-on:click="sortBySexDsc"
+                  v-if="item.name=='Sex'"
+                >
+                  👇
+                </button>
+                <!-- Birthday排序 -->
+                <button
+                  class="sortbutton"
+                  v-on:click="sortByBirthdayAsc"
+                  v-if="item.name=='Birthday'"
+                >
+                  👆
+                </button>
+                <button
+                  class="sortbutton"
+                  v-on:click="sortByBirthdayDsc"
+                  v-if="item.name=='Birthday'"
+                >
+                  👇
+                </button>
+                <!-- Address排序 -->
+                <button
+                  class="sortbutton"
+                  v-on:click="sortByAddressAsc"
+                  v-if="item.name=='Address'"
+                >
+                  👆
+                </button>
+                <button
+                  class="sortbutton"
+                  v-on:click="sortByAddressDsc"
+                  v-if="item.name=='Address'"
+                >
+                  👇
+                </button>
+                <!-- stu-id排序 -->
+                <button
+                  class="sortbutton"
+                  v-on:click="sortByStuidAsc"
+                  v-if="item.name=='Student-ID'"
+                >
+                  👆
+                </button>
+                <button
+                  class="sortbutton"
+                  v-on:click="sortByStuidDsc"
+                  v-if="item.name=='Student-ID'"
+                >
+                  👇
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(item,index) in TableData"
+              v-if="(filterName == 'ALL' || item.name == filterName) && 
+                    (filterSex == 'ALL' || item.sex == filterSex)&& 
+                    (filterAddress == 'ALL' || item.addr == filterAddress)&& 
+                    (filterBirthday == 'ALL' || item.birthday == filterBirthday)&&
+                    (filterStudentID == 'ALL' || item.stuid == filterStudentID) "
+            >
+              <td v-for="field in HeadData">{{ item[field.fieldname] }}</td>
+              <td>
+                <button
+                  class="removebutton"
+                  v-on:click="remove"
+                  v-if="(filterName == 'ALL' || item.name == filterName) && 
+                    (filterSex == 'ALL' || item.sex == filterSex)&& 
+                    (filterAddress == 'ALL' || item.addr == filterAddress)&& 
+                    (filterBirthday == 'ALL' || item.birthday == filterBirthday)&&
+                    (filterStudentID == 'ALL' || item.stuid == filterStudentID) "
+                >
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 添加模块 -->
+      <div class="add-module">
+        <div class="newinputdiv" v-for="item in HeadData">
+          {{item.name + ':'}}
+          <input
+            v-model="inputValue[item.fieldname]"
+            placeholder="请输入任务"
+            autofocus="autofocus"
+            autocomplete="on"
+            class="newinput"
+          />
+        </div>
+        <button
+          class="addbutton"
+          v-on:click="add"
+          autofocus="autofocus"
+          autocomplete="off"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vuex.js"></script> -->
+
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        message: "This is a Self-Defined table",
+        HeadData: [],
+
+        TableData: [],
+        inputValue: {
+          name: "Unknown",
+          sex: "Unknown",
+          birthday: "Unknown",
+          addr: "Unknown",
+          stuid: "Unknown",
+        },
+        filterName: "ALL",
+        filterSex: "ALL",
+        filterBirthday: "ALL",
+        filterAddress: "ALL",
+        filterStudentID: "ALL",
+        Sexset: ["Male", "Female"],
+      },
+      methods: {
+        //++++
+        // AddSexset: function (sex) {
+        //   if (this.Sexset.indexOf(sex) == -1) {
+        //     this.Sexset.push(sex);
+        //   }
+        // },
+
+        add: function () {
+          let copy = Object.assign({}, this.inputValue); //添加一行数据
+          this.TableData.push(copy);
+        },
+        remove: function (index) {
+          this.TableData.splice(index, 1);
+        },
+
+        sortByStuidAsc: function () {
+          //顺序从小到大
+          this.TableData.sort(function (a, b) {
+            return a.stuid - b.stuid;
+          });
+        },
+        sortByStuidDsc: function () {
+          //逆序从大到小
+          this.TableData.sort(function (a, b) {
+            return b.stuid - a.stuid;
+          });
+        },
+        sortByNameAsc: function () {
+          this.TableData.sort(function (a, b) {
+            return a.name.localeCompare(b.name, "en");
+          });
+        },
+        sortByNameDsc: function () {
+          this.TableData.sort(function (a, b) {
+            return b.name.localeCompare(a.name, "en");
+          });
+        },
+        sortBySexAsc: function () {
+          this.TableData.sort(function (a, b) {
+            return a.sex.localeCompare(b.sex, "en");
+          });
+        },
+        sortBySexDsc: function () {
+          this.TableData.sort(function (a, b) {
+            return b.sex.localeCompare(a.sex, "en");
+          });
+        },
+        sortByBirthdayAsc: function () {
+          this.TableData.sort(function (a, b) {
+            return a.birthday.localeCompare(b.birthday, "en");
+          });
+        },
+        sortByBirthdayDsc: function () {
+          this.TableData.sort(function (a, b) {
+            return b.birthday.localeCompare(a.birthday, "en");
+          });
+        },
+        sortByAddressAsc: function () {
+          this.TableData.sort(function (a, b) {
+            return a.addr.localeCompare(b.addr, "en");
+          });
+        },
+        sortByAddressDsc: function () {
+          this.TableData.sort(function (a, b) {
+            return b.addr.localeCompare(a.addr, "en");
+          });
+        },
+      },
+      created: function () {
+        //发起一个Ajax的请求到后台获取数据
+        this.TableData = [
+          {
+            name: "Alice",
+            sex: "Female",
+            birthday: "00.12.14",
+            addr: "Hangzhou",
+            stuid: "3190101234",
+          },
+          {
+            name: "Bob",
+            sex: "Male",
+            birthday: "01.1.24",
+            addr: "GuangZhou",
+            stuid: "3190104588",
+          },
+          {
+            name: "Catherine",
+            sex: "Female",
+            birthday: "02.04.03",
+            addr: "Hangzhou",
+            stuid: "3190107848",
+          },
+          {
+            name: "David",
+            sex: "Male",
+            birthday: "01.11.12",
+            addr: "BeiJing",
+            stuid: "3190104785",
+          },
+        ];
+
+        this.HeadData = [
+          { name: "Name", fieldname: "name" },
+          { name: "Sex", fieldname: "sex" },
+          { name: "Birthday", fieldname: "birthday" },
+          { name: "Address", fieldname: "addr" },
+          { name: "Student-ID", fieldname: "stuid" },
+        ];
+      },
+    });
+  </script>
+</html>
