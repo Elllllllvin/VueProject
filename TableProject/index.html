@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!-- 引入样式 -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <!-- 先引入 Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 引入 http-vue-loader -->
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script>
+      Vue.use(httpVueLoader);
+    </script>
+    <title>TestHTML</title>
+  </head>
+
+  <body>
+    <div id="app">
+      {{message}}
+      <my-app></my-app>
+    </div>
+  </body>
+</html>
